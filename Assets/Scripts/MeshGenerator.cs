@@ -5,17 +5,16 @@ using UnityEngine.Rendering;
 
 public class MeshGenerator : MonoBehaviour
 {
-    public GameObject dataLoaderObject;
-
     DataManager data;
     Vector3[] vertices;
     int[] triangles;
     Mesh mesh;
+    MeshCollider mCollider; 
 
     // Start is called before the first frame update
     void Start()
     {
-        data = dataLoaderObject.GetComponent<DataManager>();
+        data = GetComponent<DataManager>();
         data.ReadCSV();
 
         mesh = new Mesh();
@@ -23,6 +22,12 @@ public class MeshGenerator : MonoBehaviour
 
         CreateShape();
         UpdateMesh();
+
+        mCollider = GetComponent<MeshCollider>();
+        mCollider.sharedMesh = mesh;
+
+        TerrainColormap t = GetComponent<TerrainColormap>();
+        t.ColorByHeight();
     }
 
     void CreateShape()
@@ -68,7 +73,7 @@ public class MeshGenerator : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < 1277 * 1277; i += 1000)
+        for (int i = 0; i < DataManager.DATA_SIZE * DataManager.DATA_SIZE; i += 1000)
         {
             Gizmos.DrawSphere(vertices[i], 10f);
         }

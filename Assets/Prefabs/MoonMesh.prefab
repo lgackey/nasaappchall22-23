@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4777667081628560948}
   - component: {fileID: 1519827010897410518}
   - component: {fileID: 2234000538165027837}
+  - component: {fileID: 2204920354457546137}
+  - component: {fileID: 208092942526385877}
   m_Layer: 0
   m_Name: MoonMesh
   m_TagString: Untagged
@@ -27,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8313778988491373764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1884975, y: 0.2698593, z: 1.1065006}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -97,3 +99,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataLoaderObject: {fileID: 1047601185065950025, guid: f302ff8bd297df743a83afe138f2a8eb, type: 3}
+--- !u!114 &2204920354457546137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8313778988491373764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 467e09e67257cb74f92c88737760ab4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &208092942526385877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8313778988491373764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 496be88aa11c7c84d8da9ba62405da45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minHeight: 3.4028235e+38
+  maxHeight: -3.4028235e+38
+  minSlope: 3.4028235e+38
+  maxSlope: -3.4028235e+38
