@@ -7,7 +7,7 @@ namespace Utilities
 {
     public class UtilFunctions : MonoBehaviour
     {
-        private static double LUNAR_RADIUS = 1737.4;
+        private static float LUNAR_RADIUS = 1737.4F;
         // Start is called before the first frame update
         void Start()
         {
@@ -21,36 +21,36 @@ namespace Utilities
         }
 
         // Returns aximuth from reference A to target B.
-        public double azimuthAB(double latA, double longA, double latB, double longB)
+        public float azimuthAB(float latA, float longA, float latB, float longB)
         {
-            return Math.Atan2(Math.Sin(longB - longA) * Math.Cos(latB),
-                ((Math.Cos(latA) * Math.Sin(latB)) - (Math.Sin(latA) * Math.Cos(latB) * Math.Cos(longB - longA))));
+            return Mathf.Atan2(Mathf.Sin(longB - longA) * Mathf.Cos(latB),
+                ((Mathf.Cos(latA) * Mathf.Sin(latB)) - (Mathf.Sin(latA) * Mathf.Cos(latB) * Mathf.Cos(longB - longA))));
         }
 
         /**
          * Following 3 methods convert from spherical to cartesian coordinates
          */
-        public double getX(double lat, double lon, double height)
+        public float getX(float lat, float lon, float height)
         {
-            double radius = LUNAR_RADIUS + height;
-            return radius * Math.Cos(lat) * Math.Cos(lon);
+            float radius = LUNAR_RADIUS + height;
+            return radius * Mathf.Cos(lat) * Mathf.Cos(lon);
         }
 
-        public double getY(double lat, double lon, double height)
+        public float getY(float lat, float lon, float height)
         {
-            double radius = LUNAR_RADIUS + height;
-            return radius * Math.Cos(lat) * Math.Sin(lon);
+            float radius = LUNAR_RADIUS + height;
+            return radius * Mathf.Cos(lat) * Mathf.Sin(lon);
         }
 
-        public double getZ(double lat, double height)
+        public float getZ(float lat, float height)
         {
-            return (LUNAR_RADIUS + height) * Math.Sin(lat);
+            return (LUNAR_RADIUS + height) * Mathf.Sin(lat);
         }
 
         // Returns difference in coordinates of two points
-        public double[] coordinateDifference(double[] b, double[] a)
+        public float[] coordinateDifference(float[] b, float[] a)
         {
-            double[] ans = new double[3];
+            float[] ans = new float[3];
             for (int i = 0; i < 3; i++)
             {
                 ans[i] = b[i] - a[i];
@@ -59,21 +59,21 @@ namespace Utilities
         }
 
         // Returns distance between points given distances in x, y, z directions
-        public double rangeAB(double[] dist)
+        public float rangeAB(float[] dist)
         {
-            return Math.Sqrt(dist[0] * dist[0] + dist[1] * dist[1] + dist[2] * dist[2]);
+            return Mathf.Sqrt(dist[0] * dist[0] + dist[1] * dist[1] + dist[2] * dist[2]);
         }
 
-        public double rz(double[] dist, double latA, double lonA)
+        public float rz(float[] dist, float latA, float lonA)
         {
-            return dist[0] * Math.Cos(latA) * Math.Cos(lonA) +
-                dist[1] * Math.Cos(latA) * Math.Sin(lonA) +
-                dist[2] * Math.Sin(latA);
+            return dist[0] * Mathf.Cos(latA) * Mathf.Cos(lonA) +
+                dist[1] * Mathf.Cos(latA) * Mathf.Sin(lonA) +
+                dist[2] * Mathf.Sin(latA);
         }
 
-        public double elevation(double[] dist, double latA, double lonA)
+        public float elevation(float[] dist, float latA, float lonA)
         {
-            return Math.Asin(rz(dist, latA, lonA) / rangeAB(dist));
+            return Mathf.Asin(rz(dist, latA, lonA) / rangeAB(dist));
         }
     }
 }

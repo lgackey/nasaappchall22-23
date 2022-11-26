@@ -9,13 +9,13 @@ using Utilities;
 public class PathFinding : MonoBehaviour
 {
     int[] dr = { -1, -1, -1, 0, 0, 1, 1, 1 }, dc = { -1, 0, 1, -1, 1, -1, 0, 1 };
-    double[,] latitudeData, longitudeData, slopeData, heightData;
+    float[,] latitudeData, longitudeData, slopeData, heightData;
     UtilFunctions util = new UtilFunctions();
     class Node
     {
         public int r, c;
-        public double g, h;
-        public Node(int R, int C, double G, double H)
+        public float g, h;
+        public Node(int R, int C, float G, float H)
         {
             r = R;
             c = C;
@@ -50,9 +50,9 @@ public class PathFinding : MonoBehaviour
     // Returns the length of the shortest path from a[r1][c1] to a[r2][c2]
     void AStar(int r1, int c1, int r2, int c2)
     {
-        double[,] minF = new double[1277, 1277];
+        float[,] minF = new float[1277, 1277];
         PriorityQueue<Node, Node> open = new PriorityQueue<Node, Node>(new NodeComparer());
-        double h = computeDiagonalDist(r1, c1, r2, c2);
+        float h = computeDiagonalDist(r1, c1, r2, c2);
         open.Enqueue(new Node(r1, c1, 0, h), h);
         minF[r1, c1] = h;
         PriorityQueue<Node, Node> closed = new PriorityQueue<Node, Node>(new NodeComparer());
@@ -69,8 +69,8 @@ public class PathFinding : MonoBehaviour
                 if (inBounds(top.r+dr[i], top.c+dc[i]) && slopeData[top.r + dr[i], top.c + dc[i]] <= 15)
                 {
                     // to change type of optimization just change it to changeInHeightOrZero
-                    double gSuccessor = top.g + computePythagoreanDist(top.r, top.c, top.r + dr[i], top.c + dc[i]);
-                    double hSuccessor = computeDiagonalDist(top.r + dr[i], top.c + dc[i], r2, c2);
+                    float gSuccessor = top.g + computePythagoreanDist(top.r, top.c, top.r + dr[i], top.c + dc[i]);
+                    float hSuccessor = computeDiagonalDist(top.r + dr[i], top.c + dc[i], r2, c2);
                     if (!(minF[top.r + dr[i], top.c + dc[i]] > 0 && minF[top.r + dr[i], top.c + dc[i]] < gSuccessor + hSuccessor)) {
                         open.Enqueue(new Node(top.r + dr[i], top.c + dc[i], gSuccessor, hSuccessor), gSuccessor + hSuccessor);
                         minF[top.r + dr[i], top.c + dc[i]] = gSuccessor + hSuccessor;
@@ -82,30 +82,30 @@ public class PathFinding : MonoBehaviour
     }
 
     // heuristic - pythagorean distance
-    double computePythagoreanDist(int r1, int c1, int r2, int c2)
+    float computePythagoreanDist(int r1, int c1, int r2, int c2)
     {
-        double[] firstXYZ, secondXYZ;
-        firstXYZ = new double[]{ util.getX(latitudeData[r1,c1], longitudeData[r1,c1], heightData[r1,c1]),
+        float[] firstXYZ, secondXYZ;
+        firstXYZ = new float[]{ util.getX(latitudeData[r1,c1], longitudeData[r1,c1], heightData[r1,c1]),
                 util.getY(latitudeData[r1, c1], longitudeData[r1, c1], heightData[r1, c1]),
                 util.getZ(latitudeData[r1, c1], heightData[r1, c1])};
-        secondXYZ = new double[]{
+        secondXYZ = new float[]{
                 util.getX(latitudeData[r2, c2], longitudeData[r2, c2], heightData[r2, c2]),
                 util.getY(latitudeData[r2, c2], longitudeData[r2, c2], heightData[r2, c2]),
                 util.getZ(latitudeData[r2, c2], heightData[r2, c2])};
         return util.rangeAB(util.coordinateDifference(firstXYZ, secondXYZ));
     }
 
-    double changeInHeightOrZero(int r1, int c1, int r2, int c2)
+    float changeInHeightOrZero(int r1, int c1, int r2, int c2)
     {
-        double changeInHeight = heightData[r2, c2] - heightData[r1, c1];
+        float changeInHeight = heightData[r2, c2] - heightData[r1, c1];
         if (changeInHeight < 0) return 0;
         return changeInHeight;
     }
-    double computeDiagonalDist(int r1, int c1, int r2, int c2)
+    float computeDiagonalDist(int r1, int c1, int r2, int c2)
     {
-        double firstX = longitudeData[r1, c1], firstY = latitudeData[r1,c1];
-        double secondX = longitudeData[r2, c2], secondY = latitudeData[r2, c2];
-        return Math.Max(Math.Abs(secondX - firstX), Math.Abs(secondY - firstY));
+        float firstX = longitudeData[r1, c1], firstY = latitudeData[r1,c1];
+        float secondX = longitudeData[r2, c2], secondY = latitudeData[r2, c2];
+        return Mathf.Max(Mathf.Abs(secondX - firstX), Mathf.Abs(secondY - firstY));
     }
     bool inBounds(int r, int c)
     {

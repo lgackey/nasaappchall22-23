@@ -7,10 +7,10 @@ namespace Reader
     public class CSVReader : MonoBehaviour
     {
 
-        public double[,] latitudeData = new double[1277, 1277];
-        public double[,] longitudeData = new double[1277, 1277];
-        public double[,] slopeData = new double[1277, 1277];
-        public double[,] heightData = new double[1277, 1277];
+        public float[,] latitudeData = new float[1277, 1277];
+        public float[,] longitudeData = new float[1277, 1277];
+        public float[,] slopeData = new float[1277, 1277];
+        public float[,] heightData = new float[1277, 1277];
 
         // Start is called before the first frame update
         public void Start()
@@ -34,10 +34,10 @@ namespace Reader
 
                 for (int j = 0; j < 1277; j++)
                 {
-                    latitudeData[i, j] = double.Parse(currentLatitudeRow[j]);
-                    longitudeData[i, j] = double.Parse(currentLongitudeRow[j]);
-                    slopeData[i, j] = double.Parse(currentSlopeRow[j]);
-                    heightData[i, j] = double.Parse(currentHeightRow[j]);
+                    latitudeData[i, j] = float.Parse(currentLatitudeRow[j]);
+                    longitudeData[i, j] = float.Parse(currentLongitudeRow[j]);
+                    slopeData[i, j] = float.Parse(currentSlopeRow[j]);
+                    heightData[i, j] = float.Parse(currentHeightRow[j]);
                 }
             }
 
