@@ -51,17 +51,37 @@ public class PathFinding : MonoBehaviour
     void AStar(int r1, int c1, int r2, int c2)
     {
         float[,] minF = new float[1277, 1277];
+        float[,] distanceFromStart = new float[1277, 1277];
         PriorityQueue<Node, Node> open = new PriorityQueue<Node, Node>(new NodeComparer());
         float h = computeDiagonalDist(r1, c1, r2, c2);
         open.Enqueue(new Node(r1, c1, 0, h), h);
         minF[r1, c1] = h;
+        distanceFromStart[r1, c1] = 0;
         PriorityQueue<Node, Node> closed = new PriorityQueue<Node, Node>(new NodeComparer());
         while (open.Count > 0)
         {
             Node top = open.Dequeue();
+            distanceFromStart[top.r, top.c] = top.g;
             if (top.r == r2 && top.c == c2)
             {
                 // retrace path
+                int curR = r2, curC = c2;
+                // render r2,c2
+                while (!(curR == r2 && curC == c2))
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        if (inBounds(curR + dr[i], curC + dc[i]) && 
+                            distanceFromStart[curR + dr[i], curC + dc[i]] + 
+                            computePythagoreanDist(curR + dr[i], curC + dc[i], curR, curC) 
+                            == distanceFromStart[curR, curC]) {
+                            curR = curR + dr[i];
+                            curC = curC + dc[i];
+                            // render curR, curC
+                        }
+                    }
+                }
+                // render r1, c1
                 return;
             }
             for (int i = 0; i < 8; i++)
