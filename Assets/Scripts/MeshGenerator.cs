@@ -23,6 +23,9 @@ public class MeshGenerator : MonoBehaviour
         CreateShape();
         UpdateMesh();
 
+        //AssetDatabase.CreateAsset(mesh, "Assets/Models/MoonMesh.asset");
+        //AssetDatabase.SaveAssets();
+
         mCollider = GetComponent<MeshCollider>();
         mCollider.sharedMesh = mesh;
 
