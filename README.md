@@ -1,4 +1,3 @@
 # nasaappchall22-23
-github repo for the mcneil nasa app development challenge 2022 - 2023, logan magaha's team
-
+Github repository for Logan Magaha's McNeil 22-23 NASA App Development Challenge.
 Page Currently Under Construction
