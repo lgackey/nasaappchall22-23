@@ -8,11 +8,6 @@ public class AngleCalculator : MonoBehaviour
     public Transform player;
     TextMeshProUGUI txt;
 
-    double latA;
-    double longA;
-    double latB;
-    double longB;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -41,8 +36,10 @@ public class AngleCalculator : MonoBehaviour
         
         txt.SetText("Azimuth Angle: " + azimText + " Degrees" + "\n" + "Elevation Angle: " + elevText + " Degrees");
     }
-    //https://stackoverflow.com/questions/1185408/converting-from-longitude-latitude-to-cartesian-coordinates  
-    //https://gis.stackexchange.com/questions/108547/how-to-calculate-distance-azimuth-and-dip-from-two-xyz-coordinates
+
+    // Following forum links used for calculating and assistance in calculating Azimuth angles and Elevation angles
+    // https://stackoverflow.com/questions/1185408/converting-from-longitude-latitude-to-cartesian-coordinates  
+    // https://gis.stackexchange.com/questions/108547/how-to-calculate-distance-azimuth-and-dip-from-two-xyz-coordinates
 
     float getAzim()
     {
@@ -57,13 +54,20 @@ public class AngleCalculator : MonoBehaviour
 
     double getElevation()
     {
+        double latA = Math.Asin(player.position.z/1737000);
+        double longA = Math.Atan2(player.position.y, player.position.x);
+        double latB = Math.Asin(earth.position.z/1737000);
+        double longB = Math.Atan2(earth.position.y, earth.position.x);
+
         double xAB = player.position.x - earth.position.x;
         double yAB = player.position.y - earth.position.y;
         double zAB = player.position.z - earth.position.z;
-        double rangeAB = Math.Sqrt(xAB * xAB + yAB * yAB + zAB * zAB);
-        double rz = xAB * Math.Cos(latA) * Math.Cos(longA) + zAB * Math.Cos(latA) * Math.Sin(longA) + yAB * Math.Sin(latA);
+
+        double rangeAB = Math.Sqrt((xAB * xAB) + (yAB * yAB) + (zAB * zAB));
+        double rz = (xAB * Math.Cos(latA) * Math.Cos(longA)) + (yAB * Math.Cos(latA) * Math.Sin(longA)) + (zAB * Math.Sin(latA));
         double elevationAB = Math.Asin(rz/rangeAB);
-        elevationAB = (double)((elevationAB*180)/Math.PI);
+        elevationAB = (double)((elevationAB * 180) / Math.PI);
+
         return elevationAB;
     }
 }
