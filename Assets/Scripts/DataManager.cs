@@ -84,12 +84,12 @@ public class DataManager : MonoBehaviour
 
     float getAzim(float x, float y, float z)
     {
-        float latA = (float)Math.Asin(earth.position.y/1737000);
-        float longA = (float)Math.Atan2(earth.position.z, earth.position.x);
-        float latB = (float)Math.Asin(y/1737000);
-        float longB = (float)Math.Atan2(z, x);
-        float az = (float)Math.Atan2((Math.Sin(longB - longA) * Math.Cos(latB)), ((Math.Cos(latA) * Math.Sin(latB)) - (Math.Sin(latA) * Math.Cos(latB) * Math.Cos(longB - longA))));
-        az = (float)(az * 180.0)/(float)Math.PI;
+        float az = (float)Math.Atan2(((float)earth.position.x - x), ((float)earth.position.z - z));
+        az = (float)((az * 180)/Math.PI);
+        az += 90;
+        if(az < 0) {
+            az += 360;
+        }
         return az;
     }
 
